@@ -85,7 +85,7 @@ const QUIZ = [
   ['1970s', 'Ground Effect and Innovation', 'Which 1979 champion drove for Ferrari?', ['Jody Scheckter', 'Gilles Villeneuve', 'Carlos Reutemann', 'Alan Jones'], 0],
   ['1980s', 'The Turbo Era', 'Ayrton Senna won his first World Championship with which team?', ['Williams', 'Lotus', 'McLaren', 'Toleman'], 2],
   ['1980s', 'The Turbo Era', 'Alain Prost won his 1985 and 1986 titles with which constructor?', ['Renault', 'McLaren', 'Williams', 'Ferrari'], 1],
-  ['1980s', 'The Turbo Era', 'Nigel Mansell's nickname is which of the following?', ['Il Leone', 'The Professor', 'The Rat', 'Magic'], 0],
+  ['1980s', 'The Turbo Era', "Nigel Mansell's nickname is which of the following?", ['Il Leone', 'The Professor', 'The Rat', 'Magic'], 0],
   ['1980s', 'The Turbo Era', 'Keke Rosberg won the 1982 title driving for which team?', ['Williams', 'McLaren', 'Brabham', 'Tyrrell'], 0],
   ['1990s', 'The Modern Racing Era', 'Michael Schumacher won his first two titles with which team?', ['Ferrari', 'Benetton', 'Williams', 'McLaren'], 1],
   ['1990s', 'The Modern Racing Era', 'Damon Hill won the 1996 World Championship driving which car number?', ['0', '1', '5', '27'], 0],
@@ -102,7 +102,7 @@ const QUIZ = [
   ['2020s', 'Modern Ground Effect Era', 'Max Verstappen won his first World Championship in which year?', ['2019', '2020', '2021', '2022'], 2],
   ['2020s', 'Modern Ground Effect Era', 'Which team has Verstappen driven for throughout his championship run?', ['Mercedes', 'Ferrari', 'Red Bull Racing', 'McLaren'], 2],
   ['2020s', 'Modern Ground Effect Era', 'Lando Norris races with which featured number?', ['3', '4', '16', '81'], 1],
-  ['2020s', 'Modern Ground Effect Era', 'Oscar Piastri's featured racing number is which of these?', ['16', '55', '81', '63'], 2],
+  ['2020s', 'Modern Ground Effect Era', "Oscar Piastri's featured racing number is which of these?", ['16', '55', '81', '63'], 2],
   ['2020s', 'Modern Ground Effect Era', 'George Russell's nickname "Mr Saturday" relates to which session?', ['Sprint', 'Qualifying', 'Practice', 'Race'], 1],
 ];
 
