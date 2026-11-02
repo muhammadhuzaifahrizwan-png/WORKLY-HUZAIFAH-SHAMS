@@ -38,8 +38,19 @@ NON_START_REASONS = {
 
 
 def load(path, default=None):
+    """Load either a single YAML file or a directory of `<id>.yml` entities."""
     if not os.path.exists(path):
         return default
+    if os.path.isdir(path):
+        merged = {}
+        for name in sorted(os.listdir(path)):
+            if not name.endswith(".yml"):
+                continue
+            with open(os.path.join(path, name), encoding="utf-8") as fh:
+                data = yaml.safe_load(fh)
+            if isinstance(data, dict) and data.get("id"):
+                merged[data["id"]] = data
+        return merged
     with open(path, encoding="utf-8") as fh:
         data = yaml.safe_load(fh)
     return default if data is None else data
