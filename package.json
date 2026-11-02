@@ -1,0 +1,21 @@
+{
+  "name": "workly",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WORKLY — academic management platform for SMKA Shams, with an integrated Formula One driver database",
+  "engines": { "node": ">=20.11" },
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "import:f1": "node server/import-f1.js",
+    "seed": "node server/seed.js",
+    "test": "node --test test/*.test.js",
+    "build": "node -e \"require('./server/db').init(); console.log('database ready')\""
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}

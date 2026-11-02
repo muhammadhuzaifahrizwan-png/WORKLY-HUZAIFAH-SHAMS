@@ -1,0 +1,7 @@
+node_modules/
+data/workly.db
+data/workly.db-shm
+data/workly.db-wal
+data/uploads/
+*.log
+.DS_Store
