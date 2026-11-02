@@ -28,6 +28,17 @@ ERA_DEFS = [
     ("2020s", "Modern Ground Effect Era", 2020, 2026),
 ]
 
+def as_int(value):
+    """Coerce an F1DB position-like value to int, or None when it is not numeric."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, str) and value.strip().isdigit():
+        return int(value.strip())
+    return None
+
+
 NON_START_REASONS = {
     "did not qualify",
     "did not pre-qualify",
@@ -131,11 +142,16 @@ def main():
             if not did:
                 continue
             s = per_driver[did]["seasons"][year]
-            if row.get("position"):
-                s["positions"].append(row["position"])
+            pos = as_int(row.get("position"))
+            if pos:
+                s["positions"].append(pos)
             if row.get("points") is not None:
-                s["points"] = float(row["points"])
-                per_driver[did]["points"] += float(row["points"])
+                try:
+                    pts = float(row["points"])
+                except (TypeError, ValueError):
+                    pts = 0.0
+                s["points"] = pts
+                per_driver[did]["points"] += pts
 
         races_dir = os.path.join(ydir, "races")
         if not os.path.isdir(races_dir):
@@ -157,8 +173,8 @@ def main():
                 started = reason not in NON_START_REASONS and (row.get("laps") or 0) > 0
                 if started:
                     d["starts"] += 1
-                pos = row.get("position")
-                if started and isinstance(pos, int):
+                pos = as_int(row.get("position"))
+                if started and pos:
                     if pos == 1:
                         d["wins"] += 1
                         s["wins"] += 1
