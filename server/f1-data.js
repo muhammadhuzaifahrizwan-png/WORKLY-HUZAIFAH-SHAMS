@@ -32,6 +32,17 @@ function identityKey(name) {
     .trim();
 }
 
+/**
+ * Identity aliases for drivers whose F1DB record uses a different form of the
+ * name than the WORKLY Featured Collection. This resolves the *profile link*
+ * only; the supplied display name, number, team and nickname are never touched.
+ */
+const DRIVER_ALIASES = new Map([
+  ['giuseppe farina', 'nino-farina'],       // F1DB: "Nino Farina"
+  ['carlos sainz', 'carlos-sainz-jr'],      // F1DB: "Carlos Sainz Jr."
+  ['andrea kimi antonelli', 'kimi-antonelli'], // F1DB: "Kimi Antonelli"
+]);
+
 function loadDataset() {
   const raw = zlib.gunzipSync(fs.readFileSync(DATA_FILE));
   return JSON.parse(raw.toString('utf8'));
@@ -243,7 +254,11 @@ async function importF1Data({ log = console.log } = {}) {
     );
 
     featured.records.forEach((record, index) => {
-      let driverId = byKey.get(identityKey(record.name));
+      const key = identityKey(record.name);
+      let driverId = byKey.get(key) || DRIVER_ALIASES.get(key);
+      if (driverId && !db.prepare('SELECT id FROM drivers WHERE id = ?').get(driverId)) {
+        driverId = null; // alias target missing from this snapshot
+      }
       if (!driverId) {
         // Not in the historical dataset: keep the supplied identity as a profile
         // so the featured record is preserved, and report the discrepancy.
