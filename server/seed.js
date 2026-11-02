@@ -98,7 +98,7 @@ const QUIZ = [
   ['2010s', 'The Hybrid Era', 'Sebastian Vettel won four consecutive titles with which team?', ['Ferrari', 'Red Bull Racing', 'Mercedes', 'McLaren'], 1],
   ['2010s', 'The Hybrid Era', 'Lewis Hamilton won his 2014 and 2015 titles with which constructor?', ['Mercedes', 'McLaren', 'Ferrari', 'Red Bull Racing'], 0],
   ['2010s', 'The Hybrid Era', "Nico Rosberg won his only title in which year?", ['2014', '2015', '2016', '2017'], 2],
-  ['2010s', 'The Hybrid Era', 'Charles Leclerc's nickname "Il Predestinato" means what?', ['The Predestined One', 'The Iceman', 'The Professor', 'The Hammer'], 0],
+  ['2010s', 'The Hybrid Era', 'Charles Leclerc is nicknamed "Il Predestinato", which means what in English?', ['The Predestined One', 'The Iceman', 'The Professor', 'The Hammer'], 0],
   ['2020s', 'Modern Ground Effect Era', 'Max Verstappen won his first World Championship in which year?', ['2019', '2020', '2021', '2022'], 2],
   ['2020s', 'Modern Ground Effect Era', 'Which team has Verstappen driven for throughout his championship run?', ['Mercedes', 'Ferrari', 'Red Bull Racing', 'McLaren'], 2],
   ['2020s', 'Modern Ground Effect Era', 'Lando Norris races with which featured number?', ['3', '4', '16', '81'], 1],
