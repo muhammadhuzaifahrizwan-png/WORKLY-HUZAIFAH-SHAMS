@@ -41,13 +41,22 @@ function loadFeatured() {
   return JSON.parse(fs.readFileSync(FEATURED_FILE, 'utf8'));
 }
 
-/** Validate the supplied featured collection before any write. */
+/**
+ * Validate the supplied featured collection before any write.
+ *
+ * `problems` are blocking structural defects (a record cannot be stored safely).
+ * `discrepancies` are reported but non-blocking: the specification declares an
+ * expected size of 60 while its own table lists 62 rows, and it explicitly
+ * forbids deleting or inventing records to force the count. All supplied
+ * records are therefore preserved and the mismatch is reported.
+ */
 function validateFeatured(featured) {
   const problems = [];
+  const discrepancies = [];
   const records = Array.isArray(featured.records) ? featured.records : [];
   if (records.length !== featured.expectedSize) {
-    problems.push(
-      `expected ${featured.expectedSize} featured records but the source file contains ${records.length}`,
+    discrepancies.push(
+      `declared collection size ${featured.expectedSize} but the supplied table contains ${records.length} records; all ${records.length} were preserved rather than deleted to force the declared count`,
     );
   }
   const seen = new Map();
