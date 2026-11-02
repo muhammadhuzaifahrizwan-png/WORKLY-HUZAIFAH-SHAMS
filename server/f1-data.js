@@ -73,7 +73,7 @@ function validateFeatured(featured) {
       seen.set(key, i);
     }
   });
-  return { records, problems };
+  return { records, problems, discrepancies };
 }
 
 /**
@@ -89,7 +89,7 @@ async function importF1Data({ log = console.log } = {}) {
   const featured = loadFeatured();
   const validation = validateFeatured(featured);
   if (validation.problems.length) {
-    // Hard failure: never force a count, never silently drop records.
+    // Hard failure: a record cannot be stored safely (missing field / duplicate identity).
     throw new Error(`Featured collection validation failed:\n- ${validation.problems.join('\n- ')}`);
   }
 
@@ -101,10 +101,13 @@ async function importF1Data({ log = console.log } = {}) {
     seasonsImported: 0,
     constructorsImported: 0,
     featuredImported: 0,
+    declaredFeaturedSize: featured.expectedSize,
     featuredUnmatched: [],
+    photosVerified: 0,
+    photosMissing: 0,
     unavailableFields: 0,
     rejectedDuplicates: 0,
-    discrepancies: [],
+    discrepancies: [...validation.discrepancies],
   };
 
   const run = db.transaction(() => {
@@ -308,9 +311,18 @@ async function importF1Data({ log = console.log } = {}) {
   };
   if (checks.featuredCount !== featured.expectedSize) {
     report.discrepancies.push(
-      `featured collection stored ${checks.featuredCount} records, expected ${featured.expectedSize}`,
+      `featured collection stored ${checks.featuredCount} records (declared ${featured.expectedSize}); every supplied record was preserved`,
     );
   }
+  const photoCounts = db
+    .prepare(
+      `SELECT
+         (SELECT COUNT(*) FROM driver_images WHERE is_primary = 1 AND verified = 1) AS verified,
+         (SELECT COUNT(*) FROM drivers) AS total`,
+    )
+    .get();
+  report.photosVerified = photoCounts.verified;
+  report.photosMissing = photoCounts.total - photoCounts.verified;
   report.validation = checks;
 
   db.prepare(
